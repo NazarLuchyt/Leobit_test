@@ -1,0 +1,52 @@
+﻿@model QuizApp.ViewModel.Managing.AnswerViewModel
+
+@{
+    ViewBag.Title = "CreateAnswer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var temp1 = "";
+    var temp2 = "";
+
+}
+
+<h2>CreateAnswer</h2>
+
+@using (Html.BeginForm("CreateAnswer", "ChangeTestInfo", new { questionGuid = ViewBag.questionGuid, questionInstance = ViewBag.questionInstance }, FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <h4>AnswerViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Instance, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Instance, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Instance, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsCorrect, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsCorrect)
+                    @Html.ValidationMessageFor(model => model.IsCorrect, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @using (Html.BeginForm("GetAnswersByQuestionGuid", "ChangeTestInfo", FormMethod.Get))
+    {
+        temp1 = ViewBag.questionGuid;
+        temp2 = ViewBag.questionInstance;
+        @Html.Hidden("questionGuid", temp1)
+        @Html.Hidden("questionInstance", temp2)
+        <input type="submit" value="Cancle" />
+    }
+</div>

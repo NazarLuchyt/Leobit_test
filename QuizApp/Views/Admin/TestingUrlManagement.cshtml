@@ -1,0 +1,36 @@
+﻿@using QuizApp.ViewModel.Managing
+@model IEnumerable<TestingUrlViewModel>
+@{
+    ViewBag.Title = "TestingUrlManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>tests</h2>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name of test</th>
+            <th>Interviewee</th>
+            <th>Number Of Runs</th>
+            <th>Allowed Start Date</th>
+            <th>Allowed End Date</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TestingUrlViewModel a in Model)
+        {
+            <tr>
+                <td>@a.TestName</td>
+                <td>@a.Interviewee</td>
+                <td>@a.NumberOfRuns</td>
+                <td>@a.AllowedStartDate</td>
+                <td>@a.AllowedEndDate</td>
+                <td>@a.UrlInstance</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

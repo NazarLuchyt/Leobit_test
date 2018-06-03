@@ -1,0 +1,65 @@
+﻿@using QuizApp.ViewModel.Managing
+@model TransferViewModel<QuestionViewModel>
+
+@{
+    ViewBag.Title = "GetQuestionsByTestGuid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var b = "";
+    var count = 1;
+}
+<div>
+    @using (Html.BeginForm("GetTestByGuid", "ChangeTestInfo", FormMethod.Get))
+    {
+        b = ViewBag.testGuid;
+        @Html.Hidden("testGuid", b)
+        <input type="submit" value="Back" />
+    }
+</div>
+
+<div>
+    @using (Html.BeginForm("CreateQuestion", "ChangeTestInfo", FormMethod.Get))
+    {
+        b = ViewBag.testGuid;
+        @Html.Hidden("testGuid", b)
+        <input type="submit" value="Create Question" />
+    }
+</div>
+<h2>GetQuestionsByTestGuid</h2>
+
+    @foreach (var a in Model.TransferModels)
+    {<div class="bookItem">
+        @using (Html.BeginForm("UpdateQuestion", "ChangeTestInfo", new { questionGuid = a.Guid, testGuid = ViewBag.testGuid }, FormMethod.Post))
+        {
+        <div>
+            <h3>Question №@count</h3>
+        </div>
+        <div>
+            @Html.Label("Instance")
+        </div>
+        <div>
+            @Html.TextBox("Instance", a.Instance)
+        </div>
+        <div>
+            @Html.Label("Hint")
+        </div>
+        <div>
+            @Html.TextBox("Hint", a.Hint)
+        </div>
+        <input type="submit" value="Save" />
+        count += 1;
+        }
+        @using (Html.BeginForm("RemoveQuestion", "ChangeTestInfo", new { testGuid = ViewBag.testGuid, questionGuid = a.Guid }, FormMethod.Post))
+        {
+        <input type="submit" value="Delete" />
+        }
+
+        @using (Html.BeginForm("GetAnswersByQuestionGuid", "ChangeTestInfo", FormMethod.Get))
+        {
+            @Html.Hidden("questionGuid", a.Guid)
+            @Html.Hidden("questionInstance", a.Instance)
+        <input type="submit" value="Change answer" />
+        }
+          </div>
+        }

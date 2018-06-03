@@ -1,0 +1,44 @@
+﻿@using QuizApp.ViewModel.Managing
+@model IEnumerable<AnswerViewModel>
+
+@{
+    ViewBag.Title = "GetAnswersByQuestionGuid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ 
+    var temp1 = "";
+    var temp2 = "";
+}
+<div>
+    @using (Html.BeginForm("CreateAnswer", "ChangeTestInfo", FormMethod.Get))
+    {
+        temp1 = ViewBag.questionGuid;
+        temp1 = ViewBag.questionInstance;
+        @Html.Hidden("questionGuid", temp1)
+        @Html.Hidden("questionInstance", temp2)
+        <input type="submit" value="Create Answer" />
+    }
+</div>
+<h2>@ViewBag.questionInstance</h2>
+@foreach(AnswerViewModel a in Model)
+{
+    <div>
+        @Html.Label("Instance")
+    </div>
+    <div>
+        <p name="Instance">@a.Instance</p>
+    </div>
+    <div>
+        @Html.Label("IsCorrect")
+    </div>
+    <div>
+        @Html.CheckBox("IsCorrect", a.IsCorrect)
+    </div>
+    using (Html.BeginForm("RemoveAnswer", "ChangeTestInfo", new {
+        questionGuid = ViewBag.questionGuid, answerGuid = a.Guid, questionInstance = ViewBag.questionInstance
+    }, FormMethod.Post))
+    {
+        <input type="submit" value="Delete" />
+    }
+}
+

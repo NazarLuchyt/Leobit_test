@@ -1,0 +1,38 @@
+﻿@using QuizApp.ViewModel.Managing
+@model IEnumerable<TestViewModel>
+@{
+    ViewBag.Title = "Test Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ResultManagement</h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>@Html.ActionLink("Add test", "CreateTest", "ChangeTestInfo")</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TestViewModel a in Model)
+        {
+            <tr>
+                <td>@a.Name</td>
+                <td>@a.Description</td>
+                <td>@Html.ActionLink("Change", "GetTestByGuid", "ChangeTestInfo", new { testGuid = @a.Guid },null)</td>
+                <td>@Html.ActionLink("Delete", "Home", "Manage")</td>
+                <td>
+                @using (Html.BeginForm("CreateTestingUrl", "ChangeTestInfo", FormMethod.Get))
+                {
+                    @Html.Hidden("testGuid", a.Guid)
+                    <input type="submit" value="Create URL" />
+                }
+                </td>
+            </tr>
+        }       
+    </tbody>
+</table>
+

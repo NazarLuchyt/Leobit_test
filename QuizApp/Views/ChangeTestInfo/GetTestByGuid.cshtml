@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "GetTestByGuid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using QuizApp.ViewModel.Managing
+@model TestViewModel
+@{
+    var count = 1;
+}
+<div>
+    @using (Html.BeginForm("TestManagement", "Admin", FormMethod.Get))
+    {
+        <input type="submit" value="Back" />
+    }
+</div>
+
+@using (Html.BeginForm("UpdateTest", "ChangeTestInfo", new { testGuid = Model.Guid }, FormMethod.Post, null))
+{
+    <div>
+        @Html.LabelFor(model => model.Name)
+        @Html.EditorFor(model => model.Name)
+    </div>
+    @*@Html.HiddenFor(model => model.Guid)
+        @Html.HiddenFor(model => model.IsValid)*@
+    <div>
+        @Html.LabelFor(model => model.Description)
+        @Html.EditorFor(model => model.Description)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.TestTimeLimit)
+        @Html.EditorFor(model => model.TestTimeLimit)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.QuestionTimeLimit)
+        @Html.EditorFor(model => model.QuestionTimeLimit)
+    </div>
+    <input type="submit" value="Save" />
+}
+
+@using (Html.BeginForm("GetQuestionsByTestGuid", "ChangeTestInfo", FormMethod.Get))
+{
+    @Html.Hidden("testGuid", Model.Guid)
+    <input type="submit" value="Show Questions" />
+}
