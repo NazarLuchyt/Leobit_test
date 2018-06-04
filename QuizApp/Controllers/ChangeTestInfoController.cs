@@ -10,6 +10,7 @@ using QuizApp.ViewModel;
 using QuizApp.ViewModel.Managing;
 using QuizApp.ViewModel.Mapping;
 using Services;
+using QuizApp.ViewModel.HelpModels;
 
 namespace QuizApp.Controllers
 {
@@ -36,116 +37,276 @@ namespace QuizApp.Controllers
             _advancedMapper = advancedMapper;
         }
         [HttpGet]
-        public ActionResult GetAnswersByQuestionGuid(string questionGuid, string questionInstance)
+        public ActionResult GetAnswersByQuestionGuid(string questionGuid, string testGuid)
         {
-            var answerViewModelList = _getInfoService
-                .GetQuestionByGuid(questionGuid)
-                ?.TestAnswers
-                .Select(a => _mapper.Map<AnswerViewModel>(a))
-                .ToList();
-            ViewBag.questionInstance = questionInstance;
-            ViewBag.questionGuid = questionGuid;
-
-            return View(answerViewModelList);
+            if (questionGuid != null)
+            {
+                var answerViewModelList = _getInfoService
+                    .GetQuestionByGuid(questionGuid)
+                    ?.TestAnswers
+                    .Select(a => _mapper.Map<AnswerViewModel>(a))
+                    .ToList();
+                var models = new ListModelAndInfo<AnswerViewModel>();
+                models.TransferModel = answerViewModelList;
+                models.Guid = questionGuid;
+                models.HelpGuid = testGuid;
+                return View(models);
+            }
+            return HttpNotFound();
         }
         [HttpGet]
-        public ActionResult CreateAnswer(string questionGuid, string questionInstance)
+        public ActionResult CreateAnswer(string questionGuid, string testGuid)
         {
-            ViewBag.questionGuid = questionGuid;
-            ViewBag.questionInstance = questionInstance;
-            return View();
-        }
+            if (questionGuid != null)
+            {
+                var model = new ModelAndInfo<AnswerViewModel>();
+                model.Guid = questionGuid;
+                model.HelpGuid = testGuid;
+                return View(model);
+            }
+            return HttpNotFound();
+        }   
 
         [HttpPost]
-        public ActionResult CreateAnswer(string questionGuid, string questionInstance, AnswerViewModel answer)
+        public ActionResult CreateAnswer(string questionGuid, ModelAndInfo<AnswerViewModel> model)
         {
-            var testAnswer = _mapper.Map<TestAnswer>(answer);
-            _lowLevelTestManagementService.CreateAnswerForQuestion(questionGuid, testAnswer);
-            return RedirectToAction("GetAnswersByQuestionGuid", "ChangeTestInfo", new { questionGuid = questionGuid, questionInstance = questionInstance });
+            if (ModelState.IsValid)
+            {
+                var testAnswer = _mapper.Map<TestAnswer>(model.TransferModel);
+                _lowLevelTestManagementService.CreateAnswerForQuestion(questionGuid, testAnswer);
+                if (questionGuid != null)
+                {
+                    return RedirectToAction(actionName: "GetAnswersByQuestionGuid",
+                        controllerName: "ChangeTestInfo",
+                        routeValues: new
+                        {
+                            questionGuid = questionGuid,
+                            testGuid = model.HelpGuid
+                        });
+                }
+                return HttpNotFound();
+            }
+            return View(model);
         }
-        [HttpPost]
-        public ActionResult RemoveAnswer(string questionGuid, string answerGuid, string questionInstance)
+        [HttpGet]
+        public ActionResult RemoveAnswer(string questionGuid, string answerGuid, string testGuid)
         {
-            _lowLevelTestManagementService.RemoveAnswer(answerGuid);
-            return RedirectToAction("GetAnswersByQuestionGuid", "ChangeTestInfo", new { questionGuid = questionGuid, questionInstance= questionInstance });
+            if (answerGuid != null)
+            {
+                _lowLevelTestManagementService.RemoveAnswer(answerGuid);
+                return RedirectToAction(actionName: "GetAnswersByQuestionGuid",
+                    controllerName: "ChangeTestInfo",
+                    routeValues: new
+                    {
+                        questionGuid = questionGuid,
+                        testGuid = testGuid
+                    });
+            }
+
+            return HttpNotFound();
         }
 
         [HttpGet]
         public ActionResult GetQuestionsByTestGuid(string testGuid)
         {
-            var questionViewModelList = _getInfoService
-                .GetTestByGuid(testGuid)
-                ?.TestQuestions
-                .Select(q => _advancedMapper.MapTestQuestion(q))
-                .ToList();
-            TransferViewModel<QuestionViewModel> transfer = new TransferViewModel<QuestionViewModel>(questionViewModelList);
-           // transfer.TransferModel;
-            ViewBag.testGuid = testGuid;
-          //  foreach (QuestionViewModel a in transfer.TransferModel)
-            //    ;
-            return View(transfer);
+            if (testGuid != null)
+            {
+                var questionViewModelList = _getInfoService
+                    .GetTestByGuid(testGuid)
+                    ?.TestQuestions
+                    .Select(q => _advancedMapper.MapTestQuestion(q))
+                    .ToList();
+               var models = new ListModelAndInfo<QuestionViewModel>();
+                models.TransferModel = questionViewModelList;
+                models.Guid = testGuid;
+                return View(models);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+         
         }
         [HttpGet]
         public ActionResult CreateQuestion(string testGuid)
         {
-            ViewBag.testGuid = testGuid;
-            return View();
+          if (testGuid != null)
+            {
+                var model = new ModelAndInfo<QuestionViewModel>
+                {
+                    TransferModel = new QuestionViewModel(),
+                    Guid = testGuid
+                };
+                return View(model);
+            }
+                return HttpNotFound();
+            
         }
 
         [HttpPost]
-        public ActionResult CreateQuestion(string testGuid, QuestionViewModel question)
+        public ActionResult CreateQuestion(string testGuid, ModelAndInfo<QuestionViewModel> model)
         {
-            var testQuestion = _mapper.Map<TestQuestion>(question);
-            _lowLevelTestManagementService.CreateQuestionForTest(testGuid, testQuestion);
-            return RedirectToAction("GetQuestionsByTestGuid", "ChangeTestInfo", new { testGuid = testGuid });
+            if (ModelState.IsValid)
+            {  var testQuestion = _mapper.Map<TestQuestion>(model.TransferModel);
+                _lowLevelTestManagementService.CreateQuestionForTest(testGuid, testQuestion);
+                if (testGuid != null)
+                {
+                    return RedirectToAction(actionName: "GetQuestionsByTestGuid",
+                        controllerName: "ChangeTestInfo",
+                        routeValues: new
+                        {
+                            testGuid = testGuid
+                        });
+                }
+                return HttpNotFound();
+            }
+            return View(model);
         }
-        [HttpPost]
+        [HttpGet]
         public ActionResult RemoveQuestion(string testGuid, string questionGuid)
         {
-            _lowLevelTestManagementService.RemoveQuestion(questionGuid);
-            return RedirectToAction("GetQuestionsByTestGuid", "ChangeTestInfo", new { testGuid = testGuid });
+            if (questionGuid != null)
+            {
+                _lowLevelTestManagementService.RemoveQuestion(questionGuid);
+            }
+
+            if (testGuid != null)
+            {
+                return RedirectToAction(actionName: "GetQuestionsByTestGuid",
+                    controllerName: "ChangeTestInfo",
+                    routeValues: new
+                    {
+                        testGuid = testGuid
+                    });
+            }
+
+            return HttpNotFound();
+        }
+        [HttpGet]
+        public ActionResult UpdateQuestion(string questionGuid, string testGuid)
+        {
+            if( (questionGuid != null) && (testGuid != null))
+            {
+                var testQuestion = _advancedMapper.MapTestQuestion(_getInfoService.GetQuestionByGuid(questionGuid));
+
+                var model = new ModelAndInfo<QuestionViewModel>();
+                if (testQuestion != null)
+                {
+                    model.TransferModel = testQuestion;
+                    model.Guid = questionGuid;
+                    model.HelpGuid = testGuid;
+                    return View(model);
+                }
+            }
+            return HttpNotFound();
         }
         [HttpPost]
-        public ActionResult UpdateQuestion(string questionGuid, string testGuid, QuestionViewModel question)
+        public ActionResult UpdateQuestion(ModelAndInfo<QuestionViewModel> model)
         {
-            var testQuestion = _mapper.Map<TestQuestion>(question);
-            _lowLevelTestManagementService.UpdateQuestion(questionGuid, testQuestion);
-            return RedirectToAction("GetQuestionsByTestGuid","ChangeTestInfo", new { testGuid = testGuid });
+            if (ModelState.IsValid)
+            {
+                var testQuestion = _mapper.Map<TestQuestion>(model.TransferModel);
+                if (testQuestion != null)
+                {
+                    _lowLevelTestManagementService.UpdateQuestion(model.Guid, testQuestion);
+                    return RedirectToAction(actionName: "GetQuestionsByTestGuid",
+                        controllerName: "ChangeTestInfo",
+                        routeValues: new
+                        {
+                            testGuid = model.HelpGuid
+                        });
+                }
+                return HttpNotFound();
+                
+            }
+            return View(model);
         }
         [HttpGet]
         public ActionResult GetTestByGuid(string testGuid)
         {
             TestViewModel temptest = _advancedMapper.MapTest(_getInfoService.GetTestByGuid(testGuid));
             if (temptest != null)
+            {
                 return View(temptest);
+            }
             else
+            {
                 return HttpNotFound();
+            }
         }
         [HttpGet]
         public ActionResult CreateTest()
         {
-            
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateTest(TestViewModel test)
         {
-            var testFromDomain = _advancedMapper.MapTestViewModel(test);
-            _highLevelTestManagementService.CreateTest(testFromDomain);
-            return RedirectToAction("TestManagement", "Admin");
+            if (ModelState.IsValid)
+            {
+                var testFromDomain = _advancedMapper.MapTestViewModel(test);
+                _highLevelTestManagementService.CreateTest(testFromDomain);
+                if (testFromDomain != null)
+                {
+                    return RedirectToAction("TestManagement", "Admin");
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            else
+            {
+                return View(test);
+            }
         }
+        [HttpGet]
+        public ActionResult UpdateTest(string testGuid)
+        {
+            TestViewModel test = _advancedMapper.MapTest(_getInfoService.GetTestByGuid(testGuid));
+            if (test != null)
+            {
+                return View(test);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+
         [HttpPost]
         public ActionResult UpdateTest(string testGuid, TestViewModel test)
         {
-            var testFromDomain = _advancedMapper.MapTestViewModel(test);
-            _highLevelTestManagementService.UpdateTest(testGuid, testFromDomain);
-            return RedirectToAction("TestManagement", "Admin");
+            if (ModelState.IsValid)
+            {
+                var testFromDomain = _advancedMapper.MapTestViewModel(test);
+                if (testFromDomain != null)
+                {
+                    _highLevelTestManagementService.UpdateTest(testGuid, testFromDomain);
+                    return RedirectToAction("TestManagement", "Admin");
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            else
+            {
+                return View(test);
+            }
         }
-        [HttpPost]
-        public void RemoveTest(string testGuid)
+        [HttpGet]
+        public ActionResult RemoveTest(string testGuid)
         {
-            _highLevelTestManagementService.RemoveTest(testGuid);
+            if (testGuid != null)
+            {
+                _highLevelTestManagementService.RemoveTest(testGuid);
+                return RedirectToAction(actionName: "TestManagement",
+                    controllerName: "Admin");
+            }
+            return HttpNotFound();
         }
         [HttpGet]
         public ActionResult CreateTestingUrl(string testGuid)

@@ -42,7 +42,14 @@ namespace QuizApp.Controllers
         public ActionResult TestManagement()
         {
            var allTests = _getInfoService.GetAllTests().Select(t => _advancedMapper.MapTest(t)).ToList();
-            return View(allTests);
+            if (allTests != null)
+            {
+                return View(allTests);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         public ActionResult TestingUrlManagement()

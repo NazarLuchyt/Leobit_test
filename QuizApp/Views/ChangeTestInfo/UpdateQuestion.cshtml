@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "UpdateQuestion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UpdateQuestion</h2>
+
+@using QuizApp.ViewModel.Managing
+@model QuizApp.ViewModel.HelpModels.ModelAndInfo<QuestionViewModel>
+
+<div>
+    @Html.ActionLink("❮ Back", "GetQuestionsByTestGuid", "ChangeTestInfo", new {testGuid = Model.HelpGuid}, new { @class = "btn btn-default" })
+</div>
+
+@using (Html.BeginForm("UpdateQuestion", "ChangeTestInfo", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.Guid, Model.Guid)
+    @Html.HiddenFor(model => model.HelpGuid, Model.HelpGuid)
+    <div>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger col-md-10 col-sm-offset-1"})
+    </div>
+
+    <div class="row form-horizontal">
+        <div class="form-group col-md-10">
+            @Html.LabelFor(model => model.TransferModel.Instance, new {@class = "control-label col-sm-2"})
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.TransferModel.Instance, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.TransferModel.Instance, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group col-md-10">
+            @Html.LabelFor(model => model.TransferModel.Hint, new {@class = "control-label col-sm-2"})
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.TransferModel.Hint, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.TransferModel.Hint, "", new {@class = "text-danger"})
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+}

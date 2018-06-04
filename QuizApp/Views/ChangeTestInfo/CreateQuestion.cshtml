@@ -1,32 +1,36 @@
-﻿@model QuizApp.ViewModel.Managing.QuestionViewModel
+﻿@using QuizApp.ViewModel.Managing
+@model QuizApp.ViewModel.HelpModels.ModelAndInfo<QuestionViewModel>
 
 @{
     ViewBag.Title = "CreateQuestion";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var b = "";
 }
+<div class="row">
+    @Html.ActionLink("❮ Back", "GetQuestionsByTestGuid", "ChangeTestInfo", new { testGuid = Model.Guid }, new { @class = "btn btn-default col-md-1" })
+</div>
 
-<h2>CreateQuestion</h2>
+<h2>Create Question</h2>
 
-@using (Html.BeginForm("CreateQuestion", "ChangeTestInfo", new { testGuid = ViewBag.testGuid }, FormMethod.Post))
+@using (Html.BeginForm("CreateQuestion", "ChangeTestInfo", new { testGuid = Model.Guid }, FormMethod.Post))
 {
     <div class="form-horizontal">
-        <h4>QuestionViewModel</h4>
         <hr />
+        @Html.HiddenFor(model => model.Guid, Model.Guid)
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Instance, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TransferModel.Instance, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Instance, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Instance, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.TransferModel.Instance, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TransferModel.Instance, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Hint, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TransferModel.Hint, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Hint, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Hint, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.TransferModel.Hint, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TransferModel.Hint, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -36,12 +40,3 @@
         </div>
     </div>
 }
-
-<div>
-    @using (Html.BeginForm("GetQuestionsByTestGuid", "ChangeTestInfo", FormMethod.Get))
-            {
-                b = ViewBag.testGuid;
-        @Html.Hidden("testGuid", b)
-        <input type="submit" value="Cancle" />
-    }
-</div>

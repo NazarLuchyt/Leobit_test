@@ -2,22 +2,6 @@
     padding-top: 80px;
     padding-bottom: 20px;
 }
-/*
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-
-.dl-horizontal dt {
-    white-space: normal;
-}
-
-input,
-select,
-textarea {
-    max-width: 280px;
-}*/
 
 @media (min-width: 768px) {
     .form-inline .form-group {

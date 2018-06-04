@@ -10,31 +10,48 @@
     var count = 1;
 }
 <div>
-    @using (Html.BeginForm("TestManagement", "Admin", FormMethod.Get))
-    {
-        <input type="submit" value="Back" />
-    }
+    <button type="button" class="btn btn-default" onclick="goBack()">❮ Back</button>
 </div>
 
 @using (Html.BeginForm("UpdateTest", "ChangeTestInfo", new { testGuid = Model.Guid }, FormMethod.Post, null))
 {
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div>
-        @Html.LabelFor(model => model.Name)
-        @Html.EditorFor(model => model.Name)
+        <div>
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
     </div>
-    @*@Html.HiddenFor(model => model.Guid)
-        @Html.HiddenFor(model => model.IsValid)*@
+  
     <div>
-        @Html.LabelFor(model => model.Description)
-        @Html.EditorFor(model => model.Description)
+        <div>
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
     </div>
     <div>
-        @Html.LabelFor(model => model.TestTimeLimit)
-        @Html.EditorFor(model => model.TestTimeLimit)
+        <div>
+            @Html.LabelFor(model => model.TestTimeLimit)
+        </div>
+        <div>
+            @Html.EditorFor(model => model.TestTimeLimit, new { htmlAttributes = new { @class = "time-Class" } })
+            @Html.ValidationMessageFor(model => model.TestTimeLimit, "", new { @class = "text-danger" })
+        </div>
     </div>
     <div>
-        @Html.LabelFor(model => model.QuestionTimeLimit)
-        @Html.EditorFor(model => model.QuestionTimeLimit)
+        <div>
+            @Html.LabelFor(model => model.QuestionTimeLimit)
+        </div>
+        <div>
+            @Html.EditorFor(model => model.QuestionTimeLimit, new { htmlAttributes = new { @class = "time-Class" } })
+            @Html.ValidationMessageFor(model => model.QuestionTimeLimit, "", new { @class = "text-danger" })
+        </div>
     </div>
     <input type="submit" value="Save" />
 }

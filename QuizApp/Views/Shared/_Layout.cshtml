@@ -55,7 +55,14 @@
 $(document).ready(function () {
             $("script ~ div").css('display', 'none');
             $("center a").css('display', 'none');
-        });
+});
+
+function goBack() {
+    window.history.back();
+}
+$(function () {
+    $(".time-Class").mask("99:99:99", { placeholder: "hh.mm.ss" });
+});
     </script>
 </body>
 </html>

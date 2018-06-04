@@ -9,7 +9,12 @@ namespace QuizApp
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.maskedinput.mini.js",
+                        "~/Scripts/jquery.maskedinput.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.mini.js"
+                        ));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
@@ -61,6 +66,7 @@ namespace QuizApp
                       "~/Content/bootstrap.css",
                       "~/Content/ngDialog.min.css",
                       "~/Content/ngDialog-theme-default.min.css",
+                      "~/Content/Mystyle.css",
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/quiz-css").Include(

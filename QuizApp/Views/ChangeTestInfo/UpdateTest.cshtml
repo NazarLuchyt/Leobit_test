@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "UpdateTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using QuizApp.ViewModel.Managing
+@model TestViewModel
+
+<div>
+    @Html.ActionLink("❮ Back", "TestManagement", "Admin", null, new { @class = "btn btn-default" })
+   @*//<button type="button" class="btn btn-default" onclick="goBack()">❮ Back</button>*@
+</div>
+
+@using (Html.BeginForm("UpdateTest", "ChangeTestInfo", new { testGuid = Model.Guid }, FormMethod.Post))
+{
+    <div>
+        @Html.ValidationSummary(false, "", new { @class = "text-danger col-md-10 col-sm-offset-1" })
+    </div>
+        
+    <div class="row form-horizontal">
+        <div class="form-group col-md-10">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-sm-2" })
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.Name,new { htmlAttributes = new { @class = "form-control" } })
+                @* @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group col-md-10">
+                @Html.LabelFor(model => model.Description, new { @class = "control-label col-sm-2" })
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @*   @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+    </div>
+    <div class="row form-inline col-md-offset-2">
+        <div class="form-group">
+            <div>
+                @Html.LabelFor(model => model.TestTimeLimit)
+            </div>
+            <div>
+                @Html.EditorFor(model => model.TestTimeLimit, new { htmlAttributes = new { @class = "form-control time-Class" } })
+                @*<div>
+                    @Html.ValidationMessageFor(model => model.TestTimeLimit, "", new { @class = "text-danger" })
+                </div>*@
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                @Html.LabelFor(model => model.QuestionTimeLimit)
+            </div>
+            <div>
+                @Html.EditorFor(model => model.QuestionTimeLimit, new { htmlAttributes = new { @class = "form-control time-Class" } })
+                @*<div>
+                    @Html.ValidationMessageFor(model => model.QuestionTimeLimit, "", new { @class = "text-danger" })
+                </div>*@
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        @Html.ActionLink("Show Questions", "GetQuestionsByTestGuid", "ChangeTestInfo", new { testGuid = Model.Guid }, new { @class = "btn btn-info" })
+            
+    </div>
+}

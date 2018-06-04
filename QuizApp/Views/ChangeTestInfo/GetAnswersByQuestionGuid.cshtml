@@ -1,44 +1,38 @@
 ﻿@using QuizApp.ViewModel.Managing
-@model IEnumerable<AnswerViewModel>
+@model QuizApp.ViewModel.HelpModels.ListModelAndInfo<AnswerViewModel>
 
 @{
     ViewBag.Title = "GetAnswersByQuestionGuid";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{ 
-    var temp1 = "";
-    var temp2 = "";
-}
-<div>
-    @using (Html.BeginForm("CreateAnswer", "ChangeTestInfo", FormMethod.Get))
-    {
-        temp1 = ViewBag.questionGuid;
-        temp1 = ViewBag.questionInstance;
-        @Html.Hidden("questionGuid", temp1)
-        @Html.Hidden("questionInstance", temp2)
-        <input type="submit" value="Create Answer" />
-    }
+
+<div class="row">
+    @Html.ActionLink("❮ Back", "GetQuestionsByTestGuid", "ChangeTestInfo", new { testGuid = Model.HelpGuid }, new { @class = "btn btn-default col-md-1" })
+    @Html.ActionLink("Create new answer", "CreateAnswer", "ChangeTestInfo", new { questionGuid = Model.Guid, testGuid = Model.HelpGuid }, new { @class = "btn btn-primary col-md-2 col-md-offset-9" })
 </div>
-<h2>@ViewBag.questionInstance</h2>
-@foreach(AnswerViewModel a in Model)
+<hr class="my-Line col-md-12" />
+
+@foreach (var _model in Model.TransferModel)
 {
-    <div>
-        @Html.Label("Instance")
+    <div class="form-inline info">
+        <div class="form-group col-md-8">
+            <p>
+                @Html.Label("Instance: ")
+                @_model.Instance
+            </p>
+        </div>
+        <div class="form-group col-md-3">
+            <p>
+                @Html.Label("Correct answer: ")
+                <span>@(_model.IsCorrect ? "Yes" : "No")</span>
+            </p>
+        </div>
+        <div class="form-group col-md-1">
+            @Html.ActionLink("Delete", "RemoveAnswer", "ChangeTestInfo", new { questionGuid = Model.Guid, answerGuid = _model.Guid, testGuid = Model.HelpGuid }, new { @class = "btn btn-danger my-Button" }) 
+        </div>
     </div>
-    <div>
-        <p name="Instance">@a.Instance</p>
-    </div>
-    <div>
-        @Html.Label("IsCorrect")
-    </div>
-    <div>
-        @Html.CheckBox("IsCorrect", a.IsCorrect)
-    </div>
-    using (Html.BeginForm("RemoveAnswer", "ChangeTestInfo", new {
-        questionGuid = ViewBag.questionGuid, answerGuid = a.Guid, questionInstance = ViewBag.questionInstance
-    }, FormMethod.Post))
-    {
-        <input type="submit" value="Delete" />
-    }
+    <hr class="my-Line col-md-12"/>
 }
+
+
 

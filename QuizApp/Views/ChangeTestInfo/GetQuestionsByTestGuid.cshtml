@@ -1,65 +1,61 @@
 ﻿@using QuizApp.ViewModel.Managing
-@model TransferViewModel<QuestionViewModel>
+@model QuizApp.ViewModel.HelpModels.ListModelAndInfo<QuestionViewModel>
 
 @{
     ViewBag.Title = "GetQuestionsByTestGuid";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    var b = "";
     var count = 1;
 }
-<div>
-    @using (Html.BeginForm("GetTestByGuid", "ChangeTestInfo", FormMethod.Get))
-    {
-        b = ViewBag.testGuid;
-        @Html.Hidden("testGuid", b)
-        <input type="submit" value="Back" />
-    }
+<div class="row">
+    @Html.ActionLink("❮ Back", "UpdateTest", "ChangeTestInfo", new { testGuid = Model.Guid }, new { @class = "btn btn-default col-md-1" }) 
+    @Html.ActionLink("Create new question", "CreateQuestion", "ChangeTestInfo", new { testGuid = Model.Guid }, new { @class = "btn btn-primary col-md-2 col-md-offset-9" }) 
 </div>
 
-<div>
-    @using (Html.BeginForm("CreateQuestion", "ChangeTestInfo", FormMethod.Get))
+<h2>Question list</h2>
+
+    @foreach (var _model in Model.TransferModel)
     {
-        b = ViewBag.testGuid;
-        @Html.Hidden("testGuid", b)
-        <input type="submit" value="Create Question" />
+      
+                <div class="info form-horizontal">
+                
+                    <div class="form-group">
+                        <p class="col-md-1">№</p>
+                        <div class="col-md-8">
+                            <p>@count</p>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.ActionLink("Edit", "UpdateQuestion", "ChangeTestInfo", new { questionGuid = _model.Guid, testGuid = Model.Guid }, new { @class = "col-md-10 btn btn-warning" })
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <p class="col-md-1">Instance:</p>
+                            <div class="col-md-8">
+                                <p>@_model.Instance</p>
+                            </div>
+                            <div class="col-md-2">
+                                @Html.ActionLink("Delete", "RemoveQuestion", "ChangeTestInfo", new {testGuid = Model.Guid, questionGuid = _model.Guid}, new {@class = "col-md-10 btn btn-danger"})
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="col-md-1">Hint:</p>
+                            <div class="col-md-8">
+                                <p>@_model.Hint</p>
+                            </div>
+                            <div class="col-md-2">
+                                @Html.ActionLink("Show answer", "GetAnswersByQuestionGuid", "ChangeTestInfo", new {questionGuid = _model.Guid, testGuid = Model.Guid}, new {@class = "col-md-10 btn btn-info" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <div class="col-sm-10">
+                                @Html.ActionLink("Edit", "UpdateQuestion", "ChangeTestInfo", new { questionGuid = _model.Guid, testGuid = Model.Guid }, new {@class = "btn btn-warning" })
+                                @Html.ActionLink("Delete", "RemoveQuestion", "ChangeTestInfo", new {testGuid = Model.Guid, questionGuid = _model.Guid}, new {@class = "btn btn-danger"})
+                                @Html.ActionLink("Show answer", "GetAnswersByQuestionGuid", "ChangeTestInfo", new {questionGuid = _model.Guid, testGuid = Model.Guid}, new {@class = "btn btn-info"})
+                            </div>
+                        </div>*@
+                <hr class="form-group col-md-12 my-Line"/>
+            </div>
+            count += 1;
+
     }
-</div>
-<h2>GetQuestionsByTestGuid</h2>
-
-    @foreach (var a in Model.TransferModels)
-    {<div class="bookItem">
-        @using (Html.BeginForm("UpdateQuestion", "ChangeTestInfo", new { questionGuid = a.Guid, testGuid = ViewBag.testGuid }, FormMethod.Post))
-        {
-        <div>
-            <h3>Question №@count</h3>
-        </div>
-        <div>
-            @Html.Label("Instance")
-        </div>
-        <div>
-            @Html.TextBox("Instance", a.Instance)
-        </div>
-        <div>
-            @Html.Label("Hint")
-        </div>
-        <div>
-            @Html.TextBox("Hint", a.Hint)
-        </div>
-        <input type="submit" value="Save" />
-        count += 1;
-        }
-        @using (Html.BeginForm("RemoveQuestion", "ChangeTestInfo", new { testGuid = ViewBag.testGuid, questionGuid = a.Guid }, FormMethod.Post))
-        {
-        <input type="submit" value="Delete" />
-        }
-
-        @using (Html.BeginForm("GetAnswersByQuestionGuid", "ChangeTestInfo", FormMethod.Get))
-        {
-            @Html.Hidden("questionGuid", a.Guid)
-            @Html.Hidden("questionInstance", a.Instance)
-        <input type="submit" value="Change answer" />
-        }
-          </div>
-        }
