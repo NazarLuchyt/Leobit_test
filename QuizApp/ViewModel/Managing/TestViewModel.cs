@@ -1,4 +1,5 @@
-﻿using QuizApp.Annotations;
+﻿using System;
+using QuizApp.Annotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

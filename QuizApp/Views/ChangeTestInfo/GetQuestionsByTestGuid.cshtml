@@ -9,8 +9,8 @@
     var count = 1;
 }
 <div class="row">
-    @Html.ActionLink("❮ Back", "UpdateTest", "ChangeTestInfo", new { testGuid = Model.Guid }, new { @class = "btn btn-default col-md-1" }) 
-    @Html.ActionLink("Create new question", "CreateQuestion", "ChangeTestInfo", new { testGuid = Model.Guid }, new { @class = "btn btn-primary col-md-2 col-md-offset-9" }) 
+    @Html.ActionLink("❮ Back", "UpdateTest", "ChangeTestInfo", new { testGuid = Session["testGuid"] }, new { @class = "btn btn-default col-md-1" }) 
+    @Html.ActionLink("Create new question", "CreateQuestion", "ChangeTestInfo", new { testGuid = Session["testGuid"] }, new { @class = "btn btn-primary col-md-2 col-md-offset-9" }) 
 </div>
 
 <h2>Question list</h2>
@@ -26,7 +26,7 @@
                             <p>@count</p>
                         </div>
                         <div class="col-md-2">
-                            @Html.ActionLink("Edit", "UpdateQuestion", "ChangeTestInfo", new { questionGuid = _model.Guid, testGuid = Model.Guid }, new { @class = "col-md-10 btn btn-warning" })
+                            @Html.ActionLink("Edit", "UpdateQuestion", "ChangeTestInfo", new { questionGuid = _model.Guid/*, testGuid = Session["testGuid"]*/ }, new { @class = "col-md-10 btn btn-warning" })
                         </div>
                     </div>
                         <div class="form-group">
@@ -35,7 +35,7 @@
                                 <p>@_model.Instance</p>
                             </div>
                             <div class="col-md-2">
-                                @Html.ActionLink("Delete", "RemoveQuestion", "ChangeTestInfo", new {testGuid = Model.Guid, questionGuid = _model.Guid}, new {@class = "col-md-10 btn btn-danger"})
+                                @Html.ActionLink("Delete", "RemoveQuestion", "ChangeTestInfo", new {questionGuid = _model.Guid}, new {@class = "col-md-10 btn btn-danger"})
                             </div>
                         </div>
                         <div class="form-group">
@@ -44,18 +44,10 @@
                                 <p>@_model.Hint</p>
                             </div>
                             <div class="col-md-2">
-                                @Html.ActionLink("Show answer", "GetAnswersByQuestionGuid", "ChangeTestInfo", new {questionGuid = _model.Guid, testGuid = Model.Guid}, new {@class = "col-md-10 btn btn-info" })
+                                @Html.ActionLink("Show answer", "GetAnswersByQuestionGuid", "ChangeTestInfo", new {questionGuid = _model.Guid/*, testGuid = Session["testGuid"]*/ }, new {@class = "col-md-10 btn btn-info" })
                             </div>
                         </div>
-                        @*<div class="form-group">
-                            <div class="col-sm-10">
-                                @Html.ActionLink("Edit", "UpdateQuestion", "ChangeTestInfo", new { questionGuid = _model.Guid, testGuid = Model.Guid }, new {@class = "btn btn-warning" })
-                                @Html.ActionLink("Delete", "RemoveQuestion", "ChangeTestInfo", new {testGuid = Model.Guid, questionGuid = _model.Guid}, new {@class = "btn btn-danger"})
-                                @Html.ActionLink("Show answer", "GetAnswersByQuestionGuid", "ChangeTestInfo", new {questionGuid = _model.Guid, testGuid = Model.Guid}, new {@class = "btn btn-info"})
-                            </div>
-                        </div>*@
                 <hr class="form-group col-md-12 my-Line"/>
             </div>
             count += 1;
-
     }

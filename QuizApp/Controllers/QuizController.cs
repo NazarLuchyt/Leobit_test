@@ -34,7 +34,7 @@ namespace QuizApp.Controllers
             var error = _advancedLogicService.CheckTestingUrlForAvailability(testUrlDomain);
             if (!string.IsNullOrEmpty(error))
             {
-                return View("TestingErrorView", (object)error);
+                return View("TestingErrorView",(object)error);
             }
             //if all is ok
             var testUrl = _advancedMapper.MapTestingUrl(testUrlDomain);

@@ -264,6 +264,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Annotations\MyDateTimeAttribute.cs" />
+    <Compile Include="Annotations\MyNumberAtrribute.cs" />
     <Compile Include="Annotations\MyTimeAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -382,13 +384,13 @@
     <Content Include="Views\Quiz\Quiz.cshtml" />
     <Content Include="Views\ChangeTestInfo\UpdateTest.cshtml" />
     <Content Include="Views\ChangeTestInfo\UpdateQuestion.cshtml" />
+    <Content Include="Views\Quiz\TestingErrorView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\functionality\" />
     <Folder Include="Views\EditInfo\" />
-    <Folder Include="Views\TestManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

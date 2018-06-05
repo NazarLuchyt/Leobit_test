@@ -10,13 +10,13 @@
 @model QuizApp.ViewModel.HelpModels.ModelAndInfo<QuestionViewModel>
 
 <div>
-    @Html.ActionLink("❮ Back", "GetQuestionsByTestGuid", "ChangeTestInfo", new {testGuid = Model.HelpGuid}, new { @class = "btn btn-default" })
+    @Html.ActionLink("❮ Back", "GetQuestionsByTestGuid", "ChangeTestInfo", new {testGuid = Session["testGuid"] }, new { @class = "btn btn-default" })
 </div>
 
 @using (Html.BeginForm("UpdateQuestion", "ChangeTestInfo", FormMethod.Post))
 {
     @Html.HiddenFor(model => model.Guid, Model.Guid)
-    @Html.HiddenFor(model => model.HelpGuid, Model.HelpGuid)
+   // @Html.HiddenFor(model => model.HelpGuid, Model.HelpGuid)
     <div>
         @Html.ValidationSummary(true, "", new {@class = "text-danger col-md-10 col-sm-offset-1"})
     </div>

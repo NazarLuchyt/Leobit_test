@@ -57,11 +57,12 @@ $(document).ready(function () {
             $("center a").css('display', 'none');
 });
 
-function goBack() {
-    window.history.back();
-}
 $(function () {
-    $(".time-Class").mask("99:99:99", { placeholder: "hh.mm.ss" });
+    $(".date-time-Class").mask("99.99.9999 99:99:99", { placeholder: "dd.mm.yyyy hh:mm:ss" });
+});
+
+$(function () {
+    $(".time-Class").mask("99:99:99", { placeholder: "hh:mm:ss" });
 });
     </script>
 </body>

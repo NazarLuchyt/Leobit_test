@@ -13,7 +13,7 @@
     <button type="button" class="btn btn-default" onclick="goBack()">❮ Back</button>
 </div>
 
-@using (Html.BeginForm("UpdateTest", "ChangeTestInfo", new { testGuid = Model.Guid }, FormMethod.Post, null))
+@using (Html.BeginForm("UpdateTest", "ChangeTestInfo", new { testGuid = Session["testGuid"] }, FormMethod.Post, null))
 {
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div>

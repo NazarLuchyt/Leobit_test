@@ -41,15 +41,13 @@ namespace QuizApp.Controllers
 
         public ActionResult TestManagement()
         {
+            Session["testGuid"] = null;
            var allTests = _getInfoService.GetAllTests().Select(t => _advancedMapper.MapTest(t)).ToList();
             if (allTests != null)
             {
                 return View(allTests);
             }
-            else
-            {
                 return HttpNotFound();
-            }
         }
 
         public ActionResult TestingUrlManagement()
@@ -65,7 +63,6 @@ namespace QuizApp.Controllers
         public string CreateUrlLink(string testGuid)
         {
             string UrlLink = Request.Url.Authority.ToString() + "/Quiz/Quiz?guid=" + testGuid;
-            //   HttpRequest.Url.Host.ToString();
             return UrlLink;
         }
 

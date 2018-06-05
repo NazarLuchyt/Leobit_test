@@ -7,7 +7,7 @@
 
 }
 <div class="row">
-    @Html.ActionLink("❮ Back", "GetAnswersByQuestionGuid", "ChangeTestInfo", new { questionGuid = Model.Guid, testGuid = Model.HelpGuid }, new { @class = "btn btn-default col-md-1" })
+    @Html.ActionLink("❮ Back", "GetAnswersByQuestionGuid", "ChangeTestInfo", new { questionGuid = Model.Guid/*, testGuid = Session["testGuid"] */}, new { @class = "btn btn-default col-md-1" })
 </div>
 
 <h2>Create Answer</h2>
@@ -15,7 +15,6 @@
 @using (Html.BeginForm("CreateAnswer", "ChangeTestInfo", new { questionGuid = Model.Guid}, FormMethod.Post))
 {
     @Html.HiddenFor(model=>model.Guid, Model.Guid)
-    @Html.HiddenFor(model=>model.HelpGuid, Model.HelpGuid)
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

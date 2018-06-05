@@ -55,6 +55,7 @@ namespace QuizApp.ViewModel.Mapping
         {
             //Add some additional cases for parsing here
             var testFromDomain = _mapper.Map<Test>(testViewModel);
+
             if (testFromDomain.TestTimeLimit == new TimeSpan())
             {
                 testFromDomain.TestTimeLimit = null;

@@ -2,31 +2,16 @@
 
 @{
     ViewBag.Title = "Quiz";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_QuizLayout.cshtml";
 }
 
 <h2>Quiz</h2>
 
 <div>
     <h4>TestingUrlViewModel</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UrlInstance)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UrlInstance)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Guid)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Guid)
-        </dd>
-
+       
         <dt>
             @Html.DisplayNameFor(model => model.TestGuid)
         </dt>

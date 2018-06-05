@@ -9,7 +9,5 @@ namespace QuizApp.ViewModel.HelpModels
     {
         public List<T> TransferModel {get; set; }
         public string Guid { get; set; }
-        public string HelpGuid { get; set; }
-
     }
 }
