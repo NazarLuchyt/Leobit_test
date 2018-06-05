@@ -17,7 +17,6 @@ namespace QuizApp.Controllers
         private readonly IGetInfoService _getInfoService;
         private readonly ILowLevelTestManagementService _lowLevelTestManagementService;
         private readonly IHighLevelTestManagementService _highLevelTestManagementService;
-
         private readonly IMapper _mapper;
         private readonly IAdvancedMapper _advancedMapper;
 
