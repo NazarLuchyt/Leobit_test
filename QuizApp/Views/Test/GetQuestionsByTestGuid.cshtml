@@ -1,0 +1,47 @@
+﻿@using QuizApp.ViewModel.Managing
+@model QuizApp.ViewModel.HelpModels.ListModelAndInfo<QuestionViewModel>
+@{
+    var count = 1;
+}
+<div class="row">
+    @Html.ActionLink("❮ Back", "UpdateTest", "Test", new { testGuid = Session["testGuid"] }, new { @class = "btn btn-default col-md-1" }) 
+    @Html.ActionLink("Create new question", "CreateQuestion", "Test", new { testGuid = Session["testGuid"] }, new { @class = "btn btn-primary col-md-2 col-md-offset-9" }) 
+</div>
+
+<h2>Question list</h2>
+
+@foreach (var _model in Model.TransferModel)
+{
+    <div class="info form-horizontal">
+
+        <div class="form-group question">
+            <p class="col-md-1">№</p>
+            <div class="col-md-8">
+                <p>@count</p>
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Edit", "UpdateQuestion", "Test", new { questionGuid = _model.Guid/*, testGuid = Session["testGuid"]*/ }, new { @class = "col-md-10 btn btn-warning" })
+            </div>
+        </div>
+        <div class="form-group question">
+            <p class="col-md-1">Instance:</p>
+            <div class="col-md-8">
+                <p>@_model.Instance</p>
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Delete", "RemoveQuestion", "Test", new {questionGuid = _model.Guid}, new {@class = "col-md-10 btn btn-danger"})
+            </div>
+        </div>
+        <div class="form-group question">
+            <p class="col-md-1">Hint:</p>
+            <div class="col-md-8">
+                <p>@_model.Hint</p>
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Show answer", "GetAnswersByQuestionGuid", "Test", new {questionGuid = _model.Guid/*, testGuid = Session["testGuid"]*/ }, new {@class = "col-md-10 btn btn-info" })
+            </div>
+        </div>
+        <hr class="form-group col-md-12 my-Line"/>
+    </div>
+    count += 1;
+}

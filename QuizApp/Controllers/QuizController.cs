@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
-using QuizApp.ViewModel;
+using QuizApp.ViewModel.HelpModels;
+using QuizApp.ViewModel.Managing;
 using QuizApp.ViewModel.Mapping;
-using QuizApp.ViewModel.PassingQuiz;
 using Services;
+using QuizApp.ViewModel.PassingQuiz;
 
 namespace QuizApp.Controllers
 {
@@ -17,6 +16,7 @@ namespace QuizApp.Controllers
         private readonly IAdvancedLogicService _advancedLogicService;
         private readonly IMapper _mapper;
         private readonly IAdvancedMapper _advancedMapper;
+        private static TestPassingViewModel CurrentTest;
 
         public QuizController(IGetInfoService getInfoService, IAdvancedLogicService advancedLogicService,
             IMapper mapper, IAdvancedMapper advancedMapper)
@@ -38,33 +38,55 @@ namespace QuizApp.Controllers
             }
             //if all is ok
             var testUrl = _advancedMapper.MapTestingUrl(testUrlDomain);
-            return View(testUrl);
+            var model = new ModelAndInfo<TestingUrlViewModel>
+            {
+                TransferModel = testUrl,
+                Guid = guid
+            };
+            CurrentTest = new TestPassingViewModel()
+            {
+                TestingStartDateTime = DateTime.Now.ToString(),
+                Interviewee = testUrl.Interviewee,
+                TestingGuid = testUrl.TestGuid
+            };
+            return View(model);
         }
 
         [HttpGet]
-        public JsonResult GetInfoAndStartTest(string testingUrlGuid)
+        public ActionResult GetInfoAndStartTest(string testingUrlGuid)
         {
-            var domainTest = _getInfoService.GetTestByTestingUrlGuid(testingUrlGuid);
-
-            var questionViewModelList = domainTest
-               ?.TestQuestions
-               .Select(q => _mapper.Map<QuestionPassingViewModel>(q))
-               .ToList();
-
-            var attepmtGuid = Guid.NewGuid().ToString();
-
-            var test = new
+            if (testingUrlGuid != null)
             {
-                TestTimeLimit = domainTest.TestTimeLimit ?? new TimeSpan(),
-                QuestionTimeLimit = domainTest.QuestionTimeLimit ?? new TimeSpan(),
-                Questions = questionViewModelList,
-                AttemptGuid = attepmtGuid
-            };
+                var domainTest = _getInfoService.GetTestByTestingUrlGuid(testingUrlGuid);
 
-            _advancedLogicService.StartQuiz(_getInfoService.GetTestingUrlByGuid(testingUrlGuid), attepmtGuid);
+                if (domainTest != null)
+                {
+                    var questionViewModelList = domainTest
+                        ?.TestQuestions
+                        .Select(q => _mapper.Map<QuestionPassingViewModel>(q))
+                        .ToList();
 
-            return Json(test, JsonRequestBehavior.AllowGet);
+                    var attepmtGuid = Guid.NewGuid().ToString();
+
+                    var test = new CurrentTestPassingViewModel<QuestionPassingViewModel>()
+                    {
+                        TestTimeLimit = domainTest.TestTimeLimit ?? new TimeSpan(),
+                        QuestionTimeLimit = domainTest.QuestionTimeLimit ?? new TimeSpan(),
+                        Questions = questionViewModelList,
+                        AttemptGuid = attepmtGuid,
+                        QuestionsSize = questionViewModelList.Count
+                    };
+                    CurrentTest.AttemptGuid = attepmtGuid;
+
+                    _advancedLogicService.StartQuiz(_getInfoService.GetTestingUrlByGuid(testingUrlGuid), attepmtGuid);
+
+                    // return Json(test, JsonRequestBehavior.AllowGet);
+                    return View(test.Questions);
+                }
+            }
+            return HttpNotFound();
         }
+
 
         [HttpPost]
         public void FinishTest(TestPassingViewModel testPassing)

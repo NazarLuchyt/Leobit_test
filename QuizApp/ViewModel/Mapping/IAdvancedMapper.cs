@@ -75,11 +75,11 @@ namespace QuizApp.ViewModel.Mapping
             {
                 testingUrl.NumberOfRuns = -1;
             }
-            if (testingUrl.AllowedStartDate == new DateTime(1900, 01, 01))
+            if (testingUrl.AllowedStartDate <= new DateTime(1900, 01, 01))
             {
                 testingUrl.AllowedStartDate = null;
             }
-            if (testingUrl.AllowedEndDate == new DateTime(1900, 01, 01))
+            if (testingUrl.AllowedEndDate <= new DateTime(1900, 01, 01))
             {
                 testingUrl.AllowedEndDate = null;
             }

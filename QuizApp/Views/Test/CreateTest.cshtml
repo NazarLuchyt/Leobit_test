@@ -1,16 +1,15 @@
 ﻿@model QuizApp.ViewModel.Managing.TestViewModel
 
-@{
-    ViewBag.Title = "CreateTest";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
-<h2>CreateTest</h2>
+<div>
+    @Html.ActionLink("❮ Back", "TestManagement", "Admin", null, new { @class = "btn btn-default" })
+</div>
+
+<h2>Create Test</h2>
 
 @using (Html.BeginForm()) 
 {
     <div class="form-horizontal">
-        <h4>TestViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

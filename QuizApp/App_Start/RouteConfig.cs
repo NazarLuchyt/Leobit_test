@@ -13,10 +13,10 @@ namespace QuizApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Test",
-                url: "Test/{guid}",
-                defaults: new {controller = "Quiz", action = "Quiz"});
+            //routes.MapRoute(
+            //    name: "Test",
+            //    url: "Test/{guid}",
+            //    defaults: new {controller = "Quiz", action = "Quiz"});
 
             routes.MapRoute(
                 name: "CSV",

@@ -1,22 +1,15 @@
-﻿
-@{
-    ViewBag.Title = "UpdateQuestion";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>UpdateQuestion</h2>
+﻿<h2>Update Question</h2>
 
 @using QuizApp.ViewModel.Managing
 @model QuizApp.ViewModel.HelpModels.ModelAndInfo<QuestionViewModel>
 
 <div>
-    @Html.ActionLink("❮ Back", "GetQuestionsByTestGuid", "ChangeTestInfo", new {testGuid = Session["testGuid"] }, new { @class = "btn btn-default" })
+    @Html.ActionLink("❮ Back", "GetQuestionsByTestGuid", "Test", new { testGuid = Session["testGuid"] }, new { @class = "btn btn-default" })
 </div>
 
-@using (Html.BeginForm("UpdateQuestion", "ChangeTestInfo", FormMethod.Post))
+@using (Html.BeginForm("UpdateQuestion", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(model => model.Guid, Model.Guid)
-   // @Html.HiddenFor(model => model.HelpGuid, Model.HelpGuid)
     <div>
         @Html.ValidationSummary(true, "", new {@class = "text-danger col-md-10 col-sm-offset-1"})
     </div>

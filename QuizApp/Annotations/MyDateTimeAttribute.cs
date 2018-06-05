@@ -30,9 +30,8 @@ namespace QuizApp.Annotations
                 DateTime enterDateTime = new DateTime(inf[2],inf[1],inf[0],inf[3],inf[4],inf[5]);
                 DateTime currentDateTime = DateTime.Now.AddHours(1);
                 int result = DateTime.Compare(enterDateTime, currentDateTime);
-                //if (result >= 0) return true;
-
-                //return false;
+                if (result >= 0) return true;
+                return false;
                 
             }
             return true;

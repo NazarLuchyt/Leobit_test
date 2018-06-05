@@ -1,4 +1,5 @@
-﻿@model QuizApp.ViewModel.Managing.TestingUrlViewModel
+﻿@using QuizApp.ViewModel.Managing
+@model QuizApp.ViewModel.HelpModels.ModelAndInfo<TestingUrlViewModel>
 
 @{
     ViewBag.Title = "Quiz";
@@ -12,47 +13,54 @@
     <hr/>
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TestName)
+            @Html.DisplayNameFor(model => model.TransferModel.TestName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TestName)
+            @Html.DisplayFor(model => model.TransferModel.TestName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Interviewee)
+            @Html.DisplayNameFor(model => model.TransferModel.Interviewee)
+        </dt>
+           @if(Model.TransferModel.Interviewee!= null)
+           {
+               <dd>
+                   @Html.DisplayFor(model => model.TransferModel.Interviewee)
+               </dd>
+           }
+            else
+            {
+                <dd>
+                @Html.EditorFor(model => model.TransferModel.Interviewee)
+                </dd>
+            }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransferModel.NumberOfRuns)
         </dt>
 
         <dd>
-            @Html.EditorFor(model => model.Interviewee)
+            @Html.DisplayFor(model => model.TransferModel.NumberOfRuns)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NumberOfRuns)
+            @Html.DisplayNameFor(model => model.TransferModel.AllowedStartDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NumberOfRuns)
+            @Html.DisplayFor(model => model.TransferModel.AllowedStartDate)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AllowedStartDate)
+            @Html.DisplayNameFor(model => model.TransferModel.AllowedEndDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AllowedStartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AllowedEndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AllowedEndDate)
+            @Html.DisplayFor(model => model.TransferModel.AllowedEndDate)
         </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Start", "GetInfoAndStartTest",new { testingUrlGuid = Model.Guid})
 </p>

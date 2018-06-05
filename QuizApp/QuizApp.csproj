@@ -161,6 +161,9 @@
       <HintPath>..\packages\Microsoft.Net.Http.Headers.1.0.0-rc1-final\lib\net451\Microsoft.Net.Http.Headers.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="MoreLinq.Portable, Version=1.4.18916.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
       <HintPath>..\packages\MoreLinq.Portable.1.4.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\MoreLinq.Portable.dll</HintPath>
       <Private>True</Private>
@@ -183,6 +186,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Concurrent" />
+    <Reference Include="System.Collections.Concurrent.Fakes">
+      <HintPath>FakesAssemblies\System.Collections.Concurrent.Fakes.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.0.0-beta-23516\lib\dotnet5.2\System.Diagnostics.DiagnosticSource.dll</HintPath>
@@ -278,7 +284,7 @@
     <Compile Include="Controllers\JasmineController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\ApilikeController.cs" />
-    <Compile Include="Controllers\ChangeTestInfoController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -293,6 +299,7 @@
     <Compile Include="ViewModel\QuizPassing\QuestionPassingViewModel.cs" />
     <Compile Include="ViewModel\Managing\QuestionViewModel.cs" />
     <Compile Include="ViewModel\QuizPassing\ChoicePassingViewModel.cs" />
+    <Compile Include="ViewModel\QuizPassing\CurrentTestPassingViewModel.cs" />
     <Compile Include="ViewModel\QuizPassing\TestPassingViewModel.cs" />
     <Compile Include="ViewModel\Managing\TestingResultViewModel.cs" />
     <Compile Include="ViewModel\Managing\TestingUrlViewModel.cs" />
@@ -343,6 +350,7 @@
     <Content Include="Scripts\jasmine\console.js" />
     <Content Include="Scripts\jasmine\jasmine-html.js" />
     <Content Include="Scripts\jasmine\jasmine.js" />
+    <Fakes Include="Fakes\System.Collections.Concurrent.fakes" />
     <None Include="Properties\PublishProfiles\localProfile.pubxml" />
     <None Include="Properties\PublishProfiles\somee.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -372,25 +380,23 @@
     <Content Include="Views\Shared\_QuizLayout.cshtml" />
     <Content Include="Views\Admin\TestManagement.cshtml" />
     <Content Include="Views\Admin\ResultManagement.cshtml" />
-    <Content Include="Views\Admin\EditTest.cshtml" />
-    <Content Include="Views\ChangeTestInfo\GetQuestionsByTestGuid.cshtml" />
-    <Content Include="Views\ChangeTestInfo\GetAnswersByQuestionGuid.cshtml" />
-    <Content Include="Views\ChangeTestInfo\CreateAnswer.cshtml" />
-    <Content Include="Views\ChangeTestInfo\CreateQuestion.cshtml" />
-    <Content Include="Views\ChangeTestInfo\GetTestByGuid.cshtml" />
-    <Content Include="Views\ChangeTestInfo\CreateTest.cshtml" />
+    <Content Include="Views\Test\GetQuestionsByTestGuid.cshtml" />
+    <Content Include="Views\Test\GetAnswersByQuestionGuid.cshtml" />
+    <Content Include="Views\Test\CreateAnswer.cshtml" />
+    <Content Include="Views\Test\CreateQuestion.cshtml" />
+    <Content Include="Views\Test\CreateTest.cshtml" />
     <Content Include="Views\Admin\TestingUrlManagement.cshtml" />
-    <Content Include="Views\ChangeTestInfo\CreateTestingUrl.cshtml" />
+    <Content Include="Views\Test\CreateTestingUrl.cshtml" />
     <Content Include="Views\Quiz\Quiz.cshtml" />
-    <Content Include="Views\ChangeTestInfo\UpdateTest.cshtml" />
-    <Content Include="Views\ChangeTestInfo\UpdateQuestion.cshtml" />
+    <Content Include="Views\Test\UpdateTest.cshtml" />
+    <Content Include="Views\Test\UpdateQuestion.cshtml" />
     <Content Include="Views\Quiz\TestingErrorView.cshtml" />
+    <Content Include="Views\Quiz\GetInfoAndStartTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\functionality\" />
-    <Folder Include="Views\EditInfo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

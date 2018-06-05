@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
-using ModelClasses.Entities.Testing;
 using ModelClasses.Entities.TestParts;
-using QuizApp.ViewModel;
 using QuizApp.ViewModel.Managing;
 using QuizApp.ViewModel.Mapping;
 using Services;

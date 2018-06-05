@@ -1,10 +1,9 @@
 ﻿@using QuizApp.ViewModel.Managing
 @model QuizApp.ViewModel.HelpModels.ModelAndInfo<TestingUrlViewModel>
 
-@{
-    ViewBag.Title = "CreateTestingUrl";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<div>
+    @Html.ActionLink("❮ Back", "TestManagement", "Admin", null, new { @class = "btn btn-default" })
+</div>
 
 <h2>Create Testing Url</h2>
 
@@ -25,7 +24,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TransferModel.NumberOfRuns, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TransferModel.NumberOfRuns, new { htmlAttributes = new { @class = "form-control your_class" } })
+                @Html.EditorFor(model => model.TransferModel.NumberOfRuns, new { htmlAttributes = new { Value = "1", @class = "form-control your_class" } })
                 @Html.ValidationMessageFor(model => model.TransferModel.NumberOfRuns, "", new { @class = "text-danger" })
             </div>
         </div>

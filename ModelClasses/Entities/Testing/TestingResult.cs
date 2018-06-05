@@ -11,7 +11,7 @@ namespace ModelClasses.Entities.Testing
             Guid = System.Guid.NewGuid().ToString();
         }
 
-        public int TestingResultId { set; get; }
+        public int TestingResultId { set; get; } 
         public string Guid { set; get; }
 
         public DateTime TestingStartDateTime { set; get; }

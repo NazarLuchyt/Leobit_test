@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
-using ModelClasses.Entities.Testing;
-using ModelClasses.Entities.TestParts;
-using MoreLinq;
-using QuizApp.ViewModel;
 using QuizApp.ViewModel.Managing;
 using QuizApp.ViewModel.Mapping;
 using Services;
@@ -23,7 +16,6 @@ namespace QuizApp.Controllers
         private readonly IAdvancedMapper _advancedMapper;
         private readonly IAdvancedLogicService _advancedLogicService;
         private readonly IMapper _mapper;
-       // public List<TestViewModel> allTests { get; set; }
 
         public AdminController(IGetInfoService getInfoService, IAdvancedMapper advancedMapper,
             IAdvancedLogicService advancedLogicService, IMapper mapper)
@@ -54,7 +46,7 @@ namespace QuizApp.Controllers
         {
             var testingsList = _getInfoService.GetAllTestingUrls();
             var parsedTestingsList = testingsList.Select(t => _advancedMapper.MapTestingUrl(t)).ToList();
-            foreach(TestingUrlViewModel test in parsedTestingsList)
+            foreach(var test in parsedTestingsList)
             {
                 test.UrlInstance = CreateUrlLink(test.Guid);
             }
@@ -62,39 +54,14 @@ namespace QuizApp.Controllers
         }
         public string CreateUrlLink(string testGuid)
         {
-            string UrlLink = Request.Url.Authority.ToString() + "/Quiz/Quiz?guid=" + testGuid;
-            return UrlLink;
-        }
+            var urlLink = Request.Url.Authority + "/Quiz/Quiz?guid=" + testGuid;
 
-        [HttpGet]
-        public ActionResult EditTest(string testGuid)
-        {
-            TestViewModel temptest = _advancedMapper.MapTest(_getInfoService.GetTestByGuid(testGuid));
-            if (temptest != null)
-                return View(temptest);
-            else
-                return HttpNotFound();
+            return urlLink;
         }
-
+        
         public ActionResult ResultManagement()
         {
             return View();
-        }
-
-        [HttpGet]
-        public ActionResult GetAllTests()
-        {
-            var allTests = _getInfoService.GetAllTests().Select(t => _advancedMapper.MapTest(t)).ToList();
-            return View(allTests);
-        }
-
-        [HttpGet]
-        public JsonResult GetAllTestingUrls()//TestinURLManager
-        {
-            var testingsList = _getInfoService.GetAllTestingUrls();
-            var parsedTestingsList = testingsList.Select(t => _advancedMapper.MapTestingUrl(t)).ToList();
-
-            return Json(parsedTestingsList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

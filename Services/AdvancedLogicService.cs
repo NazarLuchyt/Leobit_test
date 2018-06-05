@@ -92,7 +92,7 @@ namespace Services
             {
                 return "Test is not available already. It was till " + testingUrl.AllowedEndDate;
             }
-            if (testingUrl.NumberOfRuns == 0)
+            if (testingUrl.NumberOfRuns < 0)
             {
                 return "Test was already run too many times";
             }
@@ -125,7 +125,14 @@ namespace Services
             {
                 return;
             }
-            testingUrl.NumberOfRuns--;
+            if (testingUrl.NumberOfRuns == 1)
+            {
+                testingUrl.NumberOfRuns = testingUrl.NumberOfRuns - 2;
+            }
+            else
+            {
+                testingUrl.NumberOfRuns--;
+            }
             _testingRepository.Update(testingUrl);
         }
 

@@ -8,7 +8,7 @@
 
 <div clas="row">
     <h2 class="col-md-5" style="margin-top: 0px">Test Management</h2>
-    @Html.ActionLink("Create new test", "CreateTest", "ChangeTestInfo", null, new {@class = "btn btn-primary col-md-2 col-md-offset-5" })
+    @Html.ActionLink("Create new test", "CreateTest", "Test", null, new {@class = "btn btn-primary col-md-2 col-md-offset-5" })
 </div>
 <hr/>
 <div class="form-inline row info">
@@ -42,13 +42,13 @@
             <p>@_model.Description</p>
         </div>
         <div class="form-group col-md-1">
-            @Html.ActionLink("Edit", "UpdateTest", "ChangeTestInfo", new {testGuid = _model.Guid}, new {@class = "btn btn-default"})
+            @Html.ActionLink("Edit", "UpdateTest", "Test", new {testGuid = _model.Guid}, new {@class = "btn btn-default"})
         </div>
         <div class="form-group col-md-1">
-            @Html.ActionLink("Delete", "RemoveTest", "ChangeTestInfo",new {testGuid = _model.Guid}, new { @class = "btn btn-default" })
+            @Html.ActionLink("Delete", "RemoveTest", "Test",new {testGuid = _model.Guid}, new { @class = "btn btn-default" })
         </div>
         <div class="form-group col-md-2">
-            @Html.ActionLink("Create URL", "CreateTestingUrl", "ChangeTestInfo", new {testGuid = _model.Guid}, new { @class = "btn btn-default" })
+            @Html.ActionLink("Create URL", "CreateTestingUrl", "Test", new {testGuid = _model.Guid}, new { @class = "btn btn-default" })
         </div>
     </div>
     <hr class="my-Line col-md-12" />

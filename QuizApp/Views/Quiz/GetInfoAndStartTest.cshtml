@@ -1,0 +1,36 @@
+﻿@using QuizApp.ViewModel.PassingQuiz
+@model IEnumerable<QuestionPassingViewModel>
+@{
+    ViewBag.Title = "GetInfoAndStartTest";
+    Layout = "~/Views/Shared/_QuizLayout.cshtml";
+    var count = 1;
+}
+@using (Html.BeginForm("FinishTest", "Quiz",null,FormMethod.Post))
+{
+   <div>
+        @foreach (var question in Model)
+        {
+        <h2>Question №@count</h2>
+            <div>
+                @Html.DisplayName(@question.Instance)
+                @Html.Display(@question.Instance)
+                @Html.Hidden(@question.Instance)
+            </div>
+            
+            <div>
+                @foreach (var answer in @question.Answers)
+                {
+                    @Html.Label(@answer.Instance, @answer.Instance)
+                    @Html.CheckBox(@answer.Instance, @answer.IsSelected)
+                }
+            </div>
+            count++;
+        }
+    </div>
+    <div>
+        <input type="submit" value="Finish"/>
+    </div>
+}
+
+
+        

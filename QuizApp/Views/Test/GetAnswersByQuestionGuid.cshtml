@@ -1,14 +1,9 @@
 ﻿@using QuizApp.ViewModel.Managing
 @model QuizApp.ViewModel.HelpModels.ListModelAndInfo<AnswerViewModel>
 
-@{
-    ViewBag.Title = "GetAnswersByQuestionGuid";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
 <div class="row">
-    @Html.ActionLink("❮ Back", "GetQuestionsByTestGuid", "ChangeTestInfo", new { testGuid = Session["testGuid"] }, new { @class = "btn btn-default col-md-1" })
-    @Html.ActionLink("Create new answer", "CreateAnswer", "ChangeTestInfo", new { questionGuid = Model.Guid/*, testGuid = Session["testGuid"] */}, new { @class = "btn btn-primary col-md-2 col-md-offset-9" })
+    @Html.ActionLink("❮ Back", "GetQuestionsByTestGuid", "Test", new { testGuid = Session["testGuid"] }, new { @class = "btn btn-default col-md-1" })
+    @Html.ActionLink("Create new answer", "CreateAnswer", "Test", new { questionGuid = Model.Guid/*, testGuid = Session["testGuid"] */}, new { @class = "btn btn-primary col-md-2 col-md-offset-9" })
 </div>
 <hr class="my-Line col-md-12" />
 
@@ -28,11 +23,8 @@
             </p>
         </div>
         <div class="form-group col-md-1">
-            @Html.ActionLink("Delete", "RemoveAnswer", "ChangeTestInfo", new { questionGuid = Model.Guid, answerGuid = _model.Guid, testGuid = Session["testGuid"] }, new { @class = "btn btn-danger my-Button" }) 
+            @Html.ActionLink("Delete", "RemoveAnswer", "Test", new { questionGuid = Model.Guid, answerGuid = _model.Guid, testGuid = Session["testGuid"] }, new { @class = "btn btn-danger my-Button" }) 
         </div>
     </div>
     <hr class="my-Line col-md-12"/>
 }
-
-
-
