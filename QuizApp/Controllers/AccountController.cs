@@ -39,7 +39,7 @@ namespace QuizApp.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("ResultManagement", "Admin");
+                    return RedirectToAction("TestManagement", "Admin");
                 }
             }
             else
